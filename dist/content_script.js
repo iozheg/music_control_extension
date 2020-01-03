@@ -18,9 +18,15 @@
 
   function getState() {
     const externalAPI = window.wrappedJSObject.externalAPI;
+    const currentTrack = externalAPI.getCurrentTrack();
+
     return {
       isPlaying: externalAPI.isPlaying(),
-      controls: externalAPI.getControls()
+      controls: externalAPI.getControls(),
+      currentTrack: {
+        title: currentTrack.title,
+        artists: [...currentTrack.artists].map(artist => artist.title)
+      }
     };
   }
 

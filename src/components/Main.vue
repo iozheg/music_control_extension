@@ -6,6 +6,12 @@
       </div>
     </div>
     <div class="row">
+      <div
+        v-if="state.currentTrack"
+        class="col-sm-12"
+      >{{ state.currentTrack.title }} - {{ state.currentTrack.artists.join(",") }}</div>
+    </div>
+    <div class="row">
       <div class="col-sm-12">
         <button class="btn btn-primary" @click="togglePlay">{{ state.isPlaying ? "Pause" : "Play" }}</button>
       </div>
