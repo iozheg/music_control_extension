@@ -12,6 +12,8 @@
     if (message === 'play') {
       externalAPI.togglePause();
     }
+
+    browser.runtime.sendMessage({ state: getState() });
   }
 
   function getState() {
