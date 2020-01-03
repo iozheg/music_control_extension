@@ -9,8 +9,16 @@
 
   function commandHandler(message) {
     const externalAPI = window.wrappedJSObject.externalAPI;
-    if (message === 'play') {
-      externalAPI.togglePause();
+    switch (message) {
+      case 'play':
+        externalAPI.togglePause();
+        break;
+      case 'play-next':
+        externalAPI.next();
+        break;
+      case 'play-previous':
+        externalAPI.prev();
+        break;
     }
 
     browser.runtime.sendMessage({ state: getState() });

@@ -14,6 +14,8 @@
     <div class="row">
       <div class="col-sm-12">
         <button class="btn btn-primary" @click="togglePlay">{{ state.isPlaying ? "Pause" : "Play" }}</button>
+        <button class="btn btn-primary" @click="playNext">Next</button>
+        <button class="btn btn-primary" @click="playPrevious">Previous</button>
       </div>
     </div>
   </div>
@@ -64,6 +66,12 @@ export default {
   methods: {
     togglePlay() {
       this.sendMessage('play');
+    },
+    playNext() {
+      this.sendMessage('play-next');
+    },
+    playPrevious() {
+      this.sendMessage('play-previous');
     },
 
     sendMessage(message) {
