@@ -1,14 +1,34 @@
 <template>
-  <div>
-    <select
-      class="form-control form-control-sm"
-      v-if="tabs.length > 0"
-      :value="selectedTabId"
-      @change="selectTab($event.target.value)"
-    >
-      <option v-for="tab in tabs" :key="tab.id" :value="tab.id">{{ tab.id }} - {{ tab.title }}</option>
-    </select>
-    <span v-else>No music tabs!</span>
+  <div
+    :class="['dropdown', showTabs ? 'is-active' : '']"
+    @click="showTabs = !showTabs"
+  >
+    <div class="dropdown-trigger">
+      <button
+        class="button is-small"
+        aria-haspopup="true"
+        aria-controls="dropdown-menu"
+      >
+        <span>Select tab</span>
+        <span class="icon is-small">
+          <i class="fas fa-angle-down" aria-hidden="true"></i>
+        </span>
+      </button>
+      <span class="is-size-7">{{ selectedTab ? selectedTab.title : '' }}</span>
+    </div>
+    <div class="dropdown-menu" id="dropdown-menu" role="menu">
+      <div class="dropdown-content">
+        <a
+          href="#"
+          class="dropdown-item is-small"
+          v-for="tab in tabs"
+          :key="tab.id"
+          @click="selectTab(tab.id)"
+        >
+          {{ tab.id }} - {{ tab.title }}
+        </a>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -20,8 +40,14 @@ export default {
     return {
       tabs: [],
       url: 'music.yandex',
-      selectedTabId: undefined
+      selectedTabId: undefined,
+      showTabs: false
     };
+  },
+  computed: {
+    selectedTab() {
+      return this.tabs.find(tab => tab.id === this.selectedTabId);
+    }
   },
 
   async mounted() {
@@ -63,12 +89,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-select {
-  max-width: 300px;
-}
-select option {
-  max-width: 300px;
-}
-</style>

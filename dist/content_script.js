@@ -7,17 +7,17 @@
 
   window.injected = true;
 
-  function commandHandler(message) {
+  async function commandHandler(message) {
     const externalAPI = window.wrappedJSObject.externalAPI;
     switch (message) {
       case 'play':
-        externalAPI.togglePause();
+        await externalAPI.togglePause();
         break;
       case 'play-next':
-        externalAPI.next();
+        await externalAPI.next();
         break;
       case 'play-previous':
-        externalAPI.prev();
+        await externalAPI.prev();
         break;
     }
 

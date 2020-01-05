@@ -1,21 +1,51 @@
 <template>
   <div class="container">
-    <div class="row">
-      <div class="col-sm-12">
+    <div class="columns is-mobile">
+      <div class="column is-10 is-offset-1 is-vcentered">
         <tab-selector @tab-selected="selectedTabId = $event" />
       </div>
     </div>
-    <div class="row">
-      <div
-        v-if="state.currentTrack"
-        class="col-sm-12"
-      >{{ state.currentTrack.title }} - {{ state.currentTrack.artists.join(",") }}</div>
+    <div class="columns is-mobile">
+      <div v-if="state.currentTrack" class="column is-10 is-offset-1">
+        <div class="track-name is-size-4">{{ state.currentTrack.title }}</div>
+        <div class="track-artist is-size-7 has-text-grey">
+          {{ state.currentTrack.artists.join(',') }}
+        </div>
+        <progress
+          v-show="loading"
+          class="progress is-small process-indication"
+          max="100"
+        ></progress>
+        <div v-show="!loading" class="process-indication"></div>
+      </div>
     </div>
-    <div class="row">
-      <div class="col-sm-12">
-        <button class="btn btn-primary" @click="togglePlay">{{ state.isPlaying ? "Pause" : "Play" }}</button>
-        <button class="btn btn-primary" @click="playNext">Next</button>
-        <button class="btn btn-primary" @click="playPrevious">Previous</button>
+    <div class="columns is-mobile is-vcentered is-centered">
+      <div class="column is-2 has-text-centered">
+        <font-awesome-icon
+          :class="[
+            'icon-button',
+            !previousTrackAvaliable ? 'icon-button_disabled' : ''
+          ]"
+          icon="fast-backward"
+          @click="playPrevious"
+          size="2x"
+        />
+      </div>
+      <div class="column is-2 has-text-centered">
+        <font-awesome-icon
+          class="icon-button"
+          :icon="state.isPlaying ? 'pause' : 'play'"
+          @click="togglePlay"
+          size="3x"
+        />
+      </div>
+      <div class="column is-2 has-text-centered">
+        <font-awesome-icon
+          class="icon-button"
+          icon="fast-forward"
+          @click="playNext"
+          size="2x"
+        />
       </div>
     </div>
   </div>
@@ -42,9 +72,7 @@
  * @property {STATE_TYPE} state
  */
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/css/bootstrap-grid.min.css';
-import 'bootstrap/dist/css/bootstrap-reboot.min.css';
+import 'bulma/css/bulma.css';
 import TabSelector from './TabSelector.vue';
 
 export default {
@@ -55,8 +83,14 @@ export default {
     return {
       selectedTabId: null,
       /** @type {STATE} */
-      state: {}
+      state: {},
+      loading: false
     };
+  },
+  computed: {
+    previousTrackAvaliable() {
+      return this.state.controls ? this.state.controls.prev !== null : true;
+    }
   },
 
   created() {
@@ -68,10 +102,14 @@ export default {
       this.sendMessage('play');
     },
     playNext() {
+      this.loading = true;
       this.sendMessage('play-next');
     },
     playPrevious() {
-      this.sendMessage('play-previous');
+      this.loading = true;
+      if (this.previousTrackAvaliable) {
+        this.sendMessage('play-previous');
+      }
     },
 
     sendMessage(message) {
@@ -80,6 +118,7 @@ export default {
       }
     },
     tabEventHandler(message) {
+      this.loading = false;
       if (message.state) {
         this.state = message.state;
       }
@@ -87,3 +126,37 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.container {
+  width: 500px;
+  height: 100%;
+  padding: 10px 0;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.track-name,
+.track-artist {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icon-button {
+  cursor: pointer;
+  opacity: 0.7;
+}
+.icon-button:hover {
+  opacity: 1;
+}
+.icon-button_disabled,
+.icon-button_disabled:hover {
+  opacity: 0.3;
+}
+
+.process-indication {
+  height: 0.1rem;
+  margin-bottom: 0;
+}
+</style>
