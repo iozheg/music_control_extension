@@ -9,6 +9,7 @@
 
   async function commandHandler(message) {
     const externalAPI = window.wrappedJSObject.externalAPI;
+
     switch (message) {
       case 'play':
         await externalAPI.togglePause();
@@ -27,6 +28,7 @@
   function getState() {
     const externalAPI = window.wrappedJSObject.externalAPI;
     const currentTrack = externalAPI.getCurrentTrack();
+    const sourceInfo = externalAPI.getSourceInfo();
 
     return {
       isPlaying: externalAPI.isPlaying(),
@@ -34,7 +36,8 @@
       currentTrack: {
         title: currentTrack.title,
         artists: [...currentTrack.artists].map(artist => artist.title)
-      }
+      },
+      sourceType: sourceInfo.type
     };
   }
 

@@ -3,7 +3,7 @@
     :class="['dropdown', showTabs ? 'is-active' : '']"
     @click="showTabs = !showTabs"
   >
-    <div class="dropdown-trigger">
+    <div class="dropdown-trigger tab-name">
       <button
         class="button is-small"
         aria-haspopup="true"
@@ -89,3 +89,11 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.tab-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>

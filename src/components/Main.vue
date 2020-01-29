@@ -1,21 +1,21 @@
 <template>
   <div class="container">
     <div class="columns is-mobile">
-      <div class="column is-10 is-offset-1 is-vcentered">
+      <div class="column is-8 is-offset-1 is-vcentered">
         <tab-selector @tab-selected="selectedTabId = $event" />
+      </div>
+      <div
+        v-if="isRadio"
+        class="column is-2 is-offset-1 is-vcentered"
+      >
+        <span>Radio</span>
       </div>
     </div>
     <div class="columns is-mobile">
       <div v-if="state.currentTrack" class="column is-10 is-offset-1">
         <div class="track-name is-size-4">{{ state.currentTrack.title }}</div>
-        <div class="track-artist is-size-7 has-text-grey">
-          {{ state.currentTrack.artists.join(',') }}
-        </div>
-        <progress
-          v-show="loading"
-          class="progress is-small process-indication"
-          max="100"
-        ></progress>
+        <div class="track-artist is-size-7 has-text-grey">{{ state.currentTrack.artists.join(',') }}</div>
+        <progress v-show="loading" class="progress is-small process-indication" max="100"></progress>
         <div v-show="!loading" class="process-indication"></div>
       </div>
     </div>
@@ -40,12 +40,7 @@
         />
       </div>
       <div class="column is-2 has-text-centered">
-        <font-awesome-icon
-          class="icon-button"
-          icon="fast-forward"
-          @click="playNext"
-          size="2x"
-        />
+        <font-awesome-icon class="icon-button" icon="fast-forward" @click="playNext" size="2x" />
       </div>
     </div>
   </div>
@@ -90,6 +85,9 @@ export default {
   computed: {
     previousTrackAvaliable() {
       return this.state.controls ? this.state.controls.prev !== null : true;
+    },
+    isRadio() {
+      return this.state.sourceType === 'radio';
     }
   },
 
@@ -120,6 +118,7 @@ export default {
     tabEventHandler(message) {
       this.loading = false;
       if (message.state) {
+        console.log(message.state);
         this.state = message.state;
       }
     }
