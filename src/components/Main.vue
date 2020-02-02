@@ -28,6 +28,24 @@
         />
       </div>
     </div>
+
+    <div class="columns is-mobile is-vcentered options-control">
+      <div class="column is-10 is-offset-1">
+        <font-awesome-icon
+          class="icon-button"
+          icon="list"
+          @click="showTrackList"
+        />
+  </div>
+    </div>
+    <div
+      v-if="visibleTrackList"
+      class="columns is-mobile is-vcentered"
+    >
+      <div class="column is-10 is-offset-1">
+        <track-list :track-list="trackList" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -55,17 +73,20 @@
 import 'bulma/css/bulma.css';
 import TabSelector from './TabSelector.vue';
 import PlayControl from './PlayControl.vue';
+import TrackList from './TrackList.vue';
 
 export default {
   name: 'Main',
-  components: { TabSelector, PlayControl },
+  components: { TabSelector, PlayControl, TrackList },
 
   data() {
     return {
       selectedTabId: null,
       /** @type {STATE} */
       state: {},
-      loading: false
+      loading: false,
+      trackList: [],
+      visibleTrackList: false
     };
   },
   computed: {
@@ -88,8 +109,17 @@ export default {
     tabEventHandler(message) {
       this.loading = false;
       if (message.state) {
-        console.log(message.state);
         this.state = message.state;
+      } else if (message.trackList) {
+        this.trackList = message.trackList;
+      }
+    },
+
+    showTrackList() {
+      this.visibleTrackList = !this.visibleTrackList;
+
+      if (this.visibleTrackList) {
+        this.sendMessage('get-track-list');
       }
     }
   }
@@ -115,5 +145,23 @@ export default {
 .process-indication {
   height: 0.1rem;
   margin-bottom: 0;
+}
+
+.options-control {
+  border-top: 1px solid lightgray;
+}
+</style>
+
+<style>
+.icon-button {
+  cursor: pointer;
+  opacity: 0.7;
+}
+.icon-button:hover {
+  opacity: 1;
+}
+.icon-button_disabled,
+.icon-button_disabled:hover {
+  opacity: 0.3;
 }
 </style>
