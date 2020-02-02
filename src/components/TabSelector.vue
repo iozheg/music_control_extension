@@ -1,26 +1,31 @@
 <template>
   <div
-    :class="['dropdown', showTabs ? 'is-active' : '']"
+    :class="['dropdown columns is-mobile', showTabs ? 'is-active' : '']"
     @click="showTabs = !showTabs"
   >
-    <div class="dropdown-trigger tab-name">
-      <button
-        class="button is-small"
-        aria-haspopup="true"
-        aria-controls="dropdown-menu"
-      >
-        <span>Select tab</span>
-        <span class="icon is-small">
-          <i class="fas fa-angle-down" aria-hidden="true"></i>
-        </span>
-      </button>
+    <div class="dropdown-trigger column is-3 is-vcentered">
+      <div class="">
+        <button
+          class="button is-small"
+          aria-haspopup="true"
+          aria-controls="dropdown-menu"
+        >
+          <span>Tab</span>
+          <span class="icon is-small">
+            <i class="fas fa-angle-down" aria-hidden="true"></i>
+          </span>
+        </button>
+      </div>
+    </div>
+    <div class="column is-8 is-vcentered tab-name">
       <span class="is-size-7">{{ selectedTab ? selectedTab.title : '' }}</span>
     </div>
+
     <div class="dropdown-menu" id="dropdown-menu" role="menu">
       <div class="dropdown-content">
         <a
           href="#"
-          class="dropdown-item is-small"
+          class="dropdown-item is-small is-size-7"
           v-for="tab in tabs"
           :key="tab.id"
           @click="selectTab(tab.id)"

@@ -1,12 +1,12 @@
 <template>
   <div class="container">
     <div class="columns is-mobile">
-      <div class="column is-8 is-offset-1 is-vcentered">
+      <div class="column is-8 is-offset-1">
         <tab-selector @tab-selected="selectedTabId = $event" />
       </div>
       <div
         v-if="isRadio"
-        class="column is-2 is-offset-1 is-vcentered"
+        class="column is-2 is-vcentered is-size-7"
       >
         <span>Radio</span>
       </div>
