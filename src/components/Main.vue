@@ -19,10 +19,15 @@
         <div v-show="!loading" class="process-indication"></div>
       </div>
     </div>
-    <play-control
-      :state="state"
-      @send-message="sendMessage"
-    />
+
+    <div class="columns is-mobile is-vcentered is-centered">
+      <div class="column is-4 has-text-centered">
+        <play-control
+          :state="state"
+          @send-message="sendMessage($event, true)"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -74,8 +79,9 @@ export default {
   },
 
   methods: {
-    sendMessage(message) {
+    sendMessage(message, isAsync = false) {
       if (this.selectedTabId > 0) {
+        if (isAsync) this.loading = true;
         browser.tabs.sendMessage(this.selectedTabId, message);
       }
     },
@@ -104,18 +110,6 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.icon-button {
-  cursor: pointer;
-  opacity: 0.7;
-}
-.icon-button:hover {
-  opacity: 1;
-}
-.icon-button_disabled,
-.icon-button_disabled:hover {
-  opacity: 0.3;
 }
 
 .process-indication {

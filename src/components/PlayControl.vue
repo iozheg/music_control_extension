@@ -1,6 +1,5 @@
 <template>
-  <div class="columns is-mobile is-vcentered is-centered">
-    <div class="column is-2 has-text-centered">
+  <div class="play-control">
       <font-awesome-icon
         :class="[
           'icon-button',
@@ -10,18 +9,18 @@
         @click="playPrevious"
         size="2x"
       />
-    </div>
-    <div class="column is-2 has-text-centered">
       <font-awesome-icon
         class="icon-button"
         :icon="state.isPlaying ? 'pause' : 'play'"
         @click="togglePlay"
         size="3x"
       />
-    </div>
-    <div class="column is-2 has-text-centered">
-      <font-awesome-icon class="icon-button" icon="fast-forward" @click="playNext" size="2x" />
-    </div>
+      <font-awesome-icon
+        class="icon-button"
+        icon="fast-forward"
+        @click="playNext"
+        size="2x"
+      />
   </div>
 </template>
 
@@ -40,20 +39,35 @@ export default {
   methods: {
     togglePlay() {
       this.$emit('send-message', 'play');
-      // this.sendMessage('play');
     },
     playNext() {
-      this.loading = true;
       this.$emit('send-message', 'play-next');
-      // this.sendMessage('play-next');
     },
     playPrevious() {
-      this.loading = true;
       if (this.previousTrackAvaliable) {
-      this.$emit('send-message', 'play-previous');
-        // this.sendMessage('play-previous');
+        this.$emit('send-message', 'play-previous');
       }
     },
   },
 };
 </script>
+
+<style scoped>
+.play-control {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icon-button {
+  cursor: pointer;
+  opacity: 0.7;
+}
+.icon-button:hover {
+  opacity: 1;
+}
+.icon-button_disabled,
+.icon-button_disabled:hover {
+  opacity: 0.3;
+}
+</style>
