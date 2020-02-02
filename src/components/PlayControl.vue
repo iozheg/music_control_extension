@@ -38,14 +38,14 @@ export default {
 
   methods: {
     togglePlay() {
-      this.$emit('send-message', 'play');
+      this.$emit('send-message', { command: 'play' });
     },
     playNext() {
-      this.$emit('send-message', 'play-next');
+      this.$emit('send-message', { command: 'play-next' });
     },
     playPrevious() {
       if (this.previousTrackAvaliable) {
-        this.$emit('send-message', 'play-previous');
+        this.$emit('send-message', { command: 'play-previous' });
       }
     },
   },

@@ -100,10 +100,10 @@ export default {
   },
 
   methods: {
-    sendMessage(message, isAsync = false) {
+    sendMessage({ command, params }, isAsync = false) {
       if (this.selectedTabId > 0) {
         if (isAsync) this.loading = true;
-        browser.tabs.sendMessage(this.selectedTabId, message);
+        browser.tabs.sendMessage(this.selectedTabId, { command, params });
       }
     },
     tabEventHandler(message) {
@@ -119,7 +119,7 @@ export default {
       this.visibleTrackList = !this.visibleTrackList;
 
       if (this.visibleTrackList) {
-        this.sendMessage('get-track-list');
+        this.sendMessage({ command: 'get-track-list' });
       }
     }
   }
