@@ -19,30 +19,10 @@
         <div v-show="!loading" class="process-indication"></div>
       </div>
     </div>
-    <div class="columns is-mobile is-vcentered is-centered">
-      <div class="column is-2 has-text-centered">
-        <font-awesome-icon
-          :class="[
-            'icon-button',
-            !previousTrackAvaliable ? 'icon-button_disabled' : ''
-          ]"
-          icon="fast-backward"
-          @click="playPrevious"
-          size="2x"
-        />
-      </div>
-      <div class="column is-2 has-text-centered">
-        <font-awesome-icon
-          class="icon-button"
-          :icon="state.isPlaying ? 'pause' : 'play'"
-          @click="togglePlay"
-          size="3x"
-        />
-      </div>
-      <div class="column is-2 has-text-centered">
-        <font-awesome-icon class="icon-button" icon="fast-forward" @click="playNext" size="2x" />
-      </div>
-    </div>
+    <play-control
+      :state="state"
+      @send-message="sendMessage"
+    />
   </div>
 </template>
 
@@ -69,10 +49,11 @@
 
 import 'bulma/css/bulma.css';
 import TabSelector from './TabSelector.vue';
+import PlayControl from './PlayControl.vue';
 
 export default {
   name: 'Main',
-  components: { TabSelector },
+  components: { TabSelector, PlayControl },
 
   data() {
     return {
@@ -83,9 +64,6 @@ export default {
     };
   },
   computed: {
-    previousTrackAvaliable() {
-      return this.state.controls ? this.state.controls.prev !== null : true;
-    },
     isRadio() {
       return this.state.sourceType === 'radio';
     }
@@ -96,20 +74,6 @@ export default {
   },
 
   methods: {
-    togglePlay() {
-      this.sendMessage('play');
-    },
-    playNext() {
-      this.loading = true;
-      this.sendMessage('play-next');
-    },
-    playPrevious() {
-      this.loading = true;
-      if (this.previousTrackAvaliable) {
-        this.sendMessage('play-previous');
-      }
-    },
-
     sendMessage(message) {
       if (this.selectedTabId > 0) {
         browser.tabs.sendMessage(this.selectedTabId, message);
