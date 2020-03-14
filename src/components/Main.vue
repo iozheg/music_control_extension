@@ -11,7 +11,7 @@
         <span>Radio</span>
       </div>
     </div>
-    <div class="columns is-mobile">
+    <div class="columns is-mobile track-name-row">
       <div v-if="state.currentTrack" class="column is-10 is-offset-1">
         <div class="track-name is-size-4">{{ state.currentTrack.title }}</div>
         <div class="track-artist is-size-7 has-text-grey">{{ state.currentTrack.artists.join(',') }}</div>
@@ -32,7 +32,7 @@
     <div class="columns is-mobile is-vcentered options-control">
       <div class="column is-10 is-offset-1">
         <font-awesome-icon
-          class="icon-button"
+          :class="['icon-button', visibleTrackList && 'icon-button_pressed']"
           icon="list"
           @click="showTrackList"
         />
@@ -139,6 +139,9 @@ export default {
   border-radius: 15px;
 }
 
+.track-name-row {
+  background-color: #f7f7f7;
+}
 .track-name,
 .track-artist {
   white-space: nowrap;
@@ -162,6 +165,10 @@ export default {
   opacity: 0.7;
 }
 .icon-button:hover {
+  opacity: 1;
+}
+.icon-button_pressed {
+  color: tomato;
   opacity: 1;
 }
 .icon-button_disabled,
