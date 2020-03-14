@@ -7,22 +7,35 @@
 
   window.injected = true;
 
-  async function commandHandler(message) {
+  async function commandHandler({ command, params }) {
     const externalAPI = window.wrappedJSObject.externalAPI;
+    let response;
 
-    switch (message) {
+    switch (command) {
       case 'play':
         await externalAPI.togglePause();
+        response = { state: getState() };
         break;
       case 'play-next':
         await externalAPI.next();
+        response = { state: getState() };
         break;
       case 'play-previous':
         await externalAPI.prev();
+        response = { state: getState() };
         break;
+      case 'get-track-list':
+        response = { trackList: getTrackList() };
+        break;
+      case 'switch-to-track':
+        await externalAPI.play(params.index);
+        response = {
+          state: getState(),
+          trackList: getTrackList()
+        };
     }
 
-    browser.runtime.sendMessage({ state: getState() });
+    browser.runtime.sendMessage(response);
   }
 
   function getState() {
@@ -35,10 +48,22 @@
       controls: externalAPI.getControls(),
       currentTrack: {
         title: currentTrack.title,
-        artists: [...currentTrack.artists].map(artist => artist.title)
+        artists: [...currentTrack.artists].map(artist => artist.title),
       },
+      trackList: getTrackList(),
       sourceType: sourceInfo.type
     };
+  }
+
+  function getTrackList() {
+    console.log('track list');
+    const externalAPI = window.wrappedJSObject.externalAPI;
+    const list = externalAPI.getTracksList();
+
+    return [...list].map(track => ({
+      artists: [...track.artists].map(artist => artist.title),
+      title: track.title,
+    }));
   }
 
   browser.runtime.onMessage.addListener(commandHandler);
