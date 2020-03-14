@@ -58,16 +58,6 @@ export default {
   justify-content: space-between;
   align-items: center;
 }
-
-.icon-button {
-  cursor: pointer;
-  opacity: 0.7;
-}
-.icon-button:hover {
-  opacity: 1;
-}
-.icon-button_disabled,
-.icon-button_disabled:hover {
-  opacity: 0.3;
-}
 </style>
+
+<style src="../styles/icon-button.css"></style>
