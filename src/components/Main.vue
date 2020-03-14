@@ -43,7 +43,10 @@
       class="columns is-mobile is-vcentered"
     >
       <div class="column is-10 is-offset-1">
-        <track-list :track-list="trackList" />
+        <track-list
+          :track-list="trackList"
+          @switch-to-track="sendMessage($event, true)"
+        />
       </div>
     </div>
   </div>
@@ -110,7 +113,8 @@ export default {
       this.loading = false;
       if (message.state) {
         this.state = message.state;
-      } else if (message.trackList) {
+      }
+      if (message.trackList) {
         this.trackList = message.trackList;
       }
     },
