@@ -49,6 +49,7 @@
       currentTrack: {
         title: currentTrack.title,
         artists: [...currentTrack.artists].map(artist => artist.title),
+        link: currentTrack.link
       },
       trackList: getTrackList(),
       sourceType: sourceInfo.type
@@ -63,6 +64,7 @@
     return [...list].map(track => ({
       artists: [...track.artists].map(artist => artist.title),
       title: track.title,
+      link: track.link
     }));
   }
 

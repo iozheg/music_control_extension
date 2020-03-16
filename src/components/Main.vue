@@ -12,9 +12,9 @@
       </div>
     </div>
     <div class="columns is-mobile track-name-row">
-      <div v-if="state.currentTrack" class="column is-10 is-offset-1">
-        <div class="track-name is-size-4">{{ state.currentTrack.title }}</div>
-        <div class="track-artist is-size-7 has-text-grey">{{ state.currentTrack.artists.join(',') }}</div>
+      <div v-if="currentTrack" class="column is-10 is-offset-1">
+        <div class="track-name is-size-4">{{ currentTrack.title }}</div>
+        <div class="track-artist is-size-7 has-text-grey">{{ currentTrack.artists.join(',') }}</div>
         <progress v-show="loading" class="progress is-small process-indication" max="100"></progress>
         <div v-show="!loading" class="process-indication"></div>
       </div>
@@ -31,11 +31,15 @@
 
     <div class="columns is-mobile is-vcentered options-control">
       <div class="column is-10 is-offset-1">
-        <font-awesome-icon
-          :class="['icon-button', visibleTrackList && 'icon-button_pressed']"
-          icon="list"
+        <button
+          :class="['button', 'is-white', visibleTrackList && 'is-active']"
+          :disabled="emptyTrackList"
           @click="showTrackList"
+        >
+        <font-awesome-icon
+          icon="list"
         />
+        </button>
   </div>
     </div>
     <div
@@ -45,6 +49,8 @@
       <div class="column is-10 is-offset-1">
         <track-list
           :track-list="trackList"
+          :current-track-link="currentTrack.link"
+          :is-playing="state.isPlaying"
           @switch-to-track="sendMessage($event, true)"
         />
       </div>
@@ -67,6 +73,9 @@
  * @typedef {Object} STATE_TYPE
  * @property {Boolean} isPlaying
  * @property {CONTROLS_TYPE} controls
+ * @property {Object} currentTrack
+ * @property {Array} trackList
+ * @property {String} sourceType
  */
 /**
  * @typedef {Object} STATE
@@ -95,7 +104,13 @@ export default {
   computed: {
     isRadio() {
       return this.state.sourceType === 'radio';
-    }
+  },
+    currentTrack() {
+      return this.state.currentTrack;
+    },
+    emptyTrackList() {
+      return !this.trackList;
+    },
   },
 
   created() {
@@ -113,18 +128,12 @@ export default {
       this.loading = false;
       if (message.state) {
         this.state = message.state;
-      }
-      if (message.trackList) {
-        this.trackList = message.trackList;
+        this.trackList = message.state.trackList;
       }
     },
 
     showTrackList() {
       this.visibleTrackList = !this.visibleTrackList;
-
-      if (this.visibleTrackList) {
-        this.sendMessage({ command: 'get-track-list' });
-      }
     }
   }
 };

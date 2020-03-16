@@ -3,11 +3,22 @@
     <div>
       <a
         v-for="(track, index) in trackList"
-        :key="track.title"
+        :key="track.link"
         @click="switchToTrack(index)"
         class="panel-block is-size-7"
       >
-        {{ track.title }} <span class="has-text-grey-light artists">{{ track.artists.join(', ') }}</span>
+        <div
+          v-if="isPlaying && track.link === currentTrackLink"
+          class="playing-icon"
+        >
+          <font-awesome-icon icon="play" />
+        </div>
+        <span :style="track.link === currentTrackLink && 'font-weight: bold'">
+          {{ track.title }}
+        </span>
+        <span class="has-text-grey-light artists">
+          {{ track.artists.join(', ') }}
+        </span>
       </a>
     </div>
   </div>
@@ -18,6 +29,8 @@ export default {
   name: "TrackList",
   props: {
     trackList: { type: Array, default: () => [] },
+    currentTrackLink: { type: String, default: undefined },
+    isPlaying: { type: Boolean, default: false }
   },
 
   methods: {
@@ -35,5 +48,8 @@ export default {
 }
 .artists {
   margin-left: 5px;
+}
+.playing-icon {
+  margin-right: 5px;
 }
 </style>
