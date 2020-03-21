@@ -1,5 +1,8 @@
 (function() {
-  browser.runtime.sendMessage({ state: getState() });
+  browser.runtime.sendMessage({
+    state: getState(),
+    trackList: getTrackList()
+  });
 
   if (window.injected) {
     return;
@@ -63,7 +66,6 @@
   }
 
   function getTrackList() {
-    console.log('track list');
     const externalAPI = window.wrappedJSObject.externalAPI;
     const list = externalAPI.getTracksList();
 
@@ -75,4 +77,21 @@
   }
 
   browser.runtime.onMessage.addListener(commandHandler);
+
+  const stateEvents = [
+    'EVENT_TRACK',
+    'EVENT_STATE'
+  ];
+
+  function updateState() {
+    browser.runtime.sendMessage({ state: getState() });
+  }
+  function turnOnEvents() {
+    const externalAPI = window.wrappedJSObject.externalAPI;
+    exportFunction(updateState, window, { defineAs: 'updateStateExtension'});
+    stateEvents.forEach(event => {
+      externalAPI.on(externalAPI[event], window.wrappedJSObject.updateStateExtension);
+    })
+  }
+  turnOnEvents();
 })();
