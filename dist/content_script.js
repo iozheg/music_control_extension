@@ -18,11 +18,17 @@
         break;
       case 'play-next':
         await externalAPI.next();
-        response = { state: getState() };
+        response = {
+          state: getState(),
+          trackList: getTrackList()
+        };
         break;
       case 'play-previous':
         await externalAPI.prev();
-        response = { state: getState() };
+        response = {
+          state: getState(),
+          trackList: getTrackList()
+        };
         break;
       case 'get-track-list':
         response = { trackList: getTrackList() };

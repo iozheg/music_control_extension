@@ -130,7 +130,9 @@ export default {
 
       if (message.state) {
         this.state = message.state;
-        this.trackList = message.state.trackList;
+      }
+      if (message.trackList) {
+        this.trackList = message.trackList;
       }
     },
 
@@ -143,6 +145,7 @@ export default {
     },
     showTrackList() {
       this.visibleTrackList = !this.visibleTrackList;
+      this.sendMessage({ command: 'get-track-list' });
     }
   }
 };
