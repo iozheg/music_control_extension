@@ -36,19 +36,20 @@
           :disabled="emptyTrackList"
           @click="showTrackList"
         >
-        <font-awesome-icon
-          icon="list"
-        />
+          <font-awesome-icon
+            icon="list"
+          />
         </button>
-  </div>
+      </div>
       <div class="column is-4">
         <volume-control
           :volume-level="volumeLevel"
           @change-volume="changeVolume"
           @toggle-mute="toggleMute"
         />
+      </div>
     </div>
-    </div>
+
     <div
       v-if="visibleTrackList"
       class="columns is-mobile is-vcentered"
@@ -81,12 +82,17 @@
  * @property {Boolean} isPlaying
  * @property {CONTROLS_TYPE} controls
  * @property {Object} currentTrack
- * @property {Array} trackList
  * @property {String} sourceType
  */
 /**
  * @typedef {Object} STATE
  * @property {STATE_TYPE} state
+ */
+/**
+ * @typedef {Object} TRACK_LIST_ITEM
+ * @property {String} list
+ * @property {String} title
+ * @property {String[]} artists
  */
 
 import 'bulma/css/bulma.css';
@@ -105,6 +111,7 @@ export default {
       /** @type {STATE} */
       state: {},
       loading: false,
+      /** @type {TRACK_LIST_ITEM[]} */
       trackList: [],
       visibleTrackList: false,
       volumeLevel: 50,
@@ -113,7 +120,7 @@ export default {
   computed: {
     isRadio() {
       return this.state.sourceType === 'radio';
-  },
+    },
     currentTrack() {
       return this.state.currentTrack;
     },
@@ -153,7 +160,6 @@ export default {
       await browser.tabs.executeScript(this.selectedTabId, {
         file: '/content_script.js'
       });
-      this.sendMessage({ command: 'turn-events-on' });
     },
     showTrackList() {
       this.visibleTrackList = !this.visibleTrackList;

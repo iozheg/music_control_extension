@@ -1,26 +1,26 @@
 <template>
   <div class="play-control">
-      <font-awesome-icon
-        :class="[
-          'icon-button',
-          !previousTrackAvaliable ? 'icon-button_disabled' : ''
-        ]"
-        icon="fast-backward"
-        @click="playPrevious"
-        size="2x"
-      />
-      <font-awesome-icon
-        class="icon-button"
-        :icon="state.isPlaying ? 'pause' : 'play'"
-        @click="togglePlay"
-        size="3x"
-      />
-      <font-awesome-icon
-        class="icon-button"
-        icon="fast-forward"
-        @click="playNext"
-        size="2x"
-      />
+    <font-awesome-icon
+      :class="[
+        'icon-button',
+        !previousTrackAvaliable ? 'icon-button_disabled' : ''
+      ]"
+      icon="fast-backward"
+      @click="playPrevious"
+      size="2x"
+    />
+    <font-awesome-icon
+      class="icon-button"
+      :icon="state.isPlaying ? 'pause' : 'play'"
+      @click="togglePlay"
+      size="3x"
+    />
+    <font-awesome-icon
+      class="icon-button"
+      icon="fast-forward"
+      @click="playNext"
+      size="2x"
+    />
   </div>
 </template>
 
