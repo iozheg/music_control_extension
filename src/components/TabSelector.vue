@@ -83,9 +83,6 @@ export default {
     async selectTab(value) {
       this.selectedTabId = Number(value);
       if (!isNaN(this.selectedTabId)) {
-        await browser.tabs.executeScript(this.selectedTabId, {
-          file: '/content_script.js'
-        });
         await browser.storage.local.set({ selectedTabId: this.selectedTabId });
 
         this.$emit('tab-selected', this.selectedTabId);

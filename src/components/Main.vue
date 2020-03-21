@@ -2,7 +2,7 @@
   <div class="container">
     <div class="columns is-mobile">
       <div class="column is-8 is-offset-1">
-        <tab-selector @tab-selected="selectedTabId = $event" />
+        <tab-selector @tab-selected="tabSelected" />
       </div>
       <div
         v-if="isRadio"
@@ -132,6 +132,13 @@ export default {
       }
     },
 
+    async tabSelected(newTabId) {
+      this.selectedTabId = newTabId;
+      await browser.tabs.executeScript(this.selectedTabId, {
+        file: '/content_script.js'
+      });
+      this.sendMessage({ command: 'turn-events-on' });
+    },
     showTrackList() {
       this.visibleTrackList = !this.visibleTrackList;
     }
