@@ -124,8 +124,10 @@ export default {
         browser.tabs.sendMessage(this.selectedTabId, { command, params });
       }
     },
-    tabEventHandler(message) {
+    tabEventHandler(message, sender) {
       this.loading = false;
+      if (!sender.tab || sender.tab.id !== this.selectedTabId) return;
+
       if (message.state) {
         this.state = message.state;
         this.trackList = message.state.trackList;
