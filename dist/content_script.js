@@ -1,7 +1,8 @@
 (function() {
   browser.runtime.sendMessage({
     state: getState(),
-    trackList: getTrackList()
+    trackList: getTrackList(),
+    volumeLevel: getVolumeLevel()
   });
 
   if (window.injected) {
@@ -42,6 +43,20 @@
           state: getState(),
           trackList: getTrackList()
         };
+        break;
+
+      case 'change-volume':
+        await externalAPI.setVolume(params.level / 100);
+        response = {
+          volumeLevel: getVolumeLevel()
+        };
+        break;
+      case 'toggle-mute':
+        await externalAPI.toggleMute();
+        response = {
+          volumeLevel: getVolumeLevel()
+        };
+        break;
     }
 
     browser.runtime.sendMessage(response);
@@ -60,7 +75,6 @@
         artists: [...currentTrack.artists].map(artist => artist.title),
         link: currentTrack.link
       },
-      trackList: getTrackList(),
       sourceType: sourceInfo.type
     };
   }
@@ -76,7 +90,13 @@
     }));
   }
 
+  function getVolumeLevel() {
+    const externalAPI = window.wrappedJSObject.externalAPI;
+    return externalAPI.getVolume() * 100;
+  }
+
   browser.runtime.onMessage.addListener(commandHandler);
+
 
   const stateEvents = [
     'EVENT_TRACK',
@@ -86,12 +106,19 @@
   function updateState() {
     browser.runtime.sendMessage({ state: getState() });
   }
+  function updateVolume() {
+    browser.runtime.sendMessage({ volumeLevel: getVolumeLevel() });
+  }
   function turnOnEvents() {
     const externalAPI = window.wrappedJSObject.externalAPI;
+
     exportFunction(updateState, window, { defineAs: 'updateStateExtension'});
     stateEvents.forEach(event => {
       externalAPI.on(externalAPI[event], window.wrappedJSObject.updateStateExtension);
-    })
+    });
+
+    exportFunction(updateVolume, window, { defineAs: 'updateVolumeExtension'});
+    externalAPI.on(externalAPI.EVENT_VOLUME, window.wrappedJSObject.updateVolumeExtension);
   }
   turnOnEvents();
 })();

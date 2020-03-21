@@ -29,8 +29,8 @@
       </div>
     </div>
 
-    <div class="columns is-mobile is-vcentered options-control">
-      <div class="column is-10 is-offset-1">
+    <div class="columns is-mobile options-control">
+      <div class="column is-6 is-offset-1">
         <button
           :class="['button', 'is-white', visibleTrackList && 'is-active']"
           :disabled="emptyTrackList"
@@ -41,6 +41,13 @@
         />
         </button>
   </div>
+      <div class="column is-4">
+        <volume-control
+          :volume-level="volumeLevel"
+          @change-volume="changeVolume"
+          @toggle-mute="toggleMute"
+        />
+    </div>
     </div>
     <div
       v-if="visibleTrackList"
@@ -86,10 +93,11 @@ import 'bulma/css/bulma.css';
 import TabSelector from './TabSelector.vue';
 import PlayControl from './PlayControl.vue';
 import TrackList from './TrackList.vue';
+import VolumeControl from './VolumeControl.vue';
 
 export default {
   name: 'Main',
-  components: { TabSelector, PlayControl, TrackList },
+  components: { TabSelector, PlayControl, TrackList, VolumeControl },
 
   data() {
     return {
@@ -98,7 +106,8 @@ export default {
       state: {},
       loading: false,
       trackList: [],
-      visibleTrackList: false
+      visibleTrackList: false,
+      volumeLevel: 50,
     };
   },
   computed: {
@@ -134,6 +143,9 @@ export default {
       if (message.trackList) {
         this.trackList = message.trackList;
       }
+      if (message.volumeLevel >= 0) {
+        this.volumeLevel = message.volumeLevel;
+      }
     },
 
     async tabSelected(newTabId) {
@@ -146,6 +158,13 @@ export default {
     showTrackList() {
       this.visibleTrackList = !this.visibleTrackList;
       this.sendMessage({ command: 'get-track-list' });
+    },
+
+    changeVolume(level) {
+      this.sendMessage({ command: 'change-volume', params: { level } });
+    },
+    toggleMute() {
+      this.sendMessage({ command: 'toggle-mute' });
     }
   }
 };
