@@ -31,37 +31,15 @@
 
     <div class="columns is-mobile options-control">
       <div class="column is-6 is-offset-1">
-        <button
-          :class="['button', 'is-white', visibleTrackList && 'is-active']"
-          :disabled="emptyTrackList"
-          @click="showTrackList"
-        >
-          <font-awesome-icon
-            icon="list"
-          />
-        </button>
-        <button
-          :class="['button', 'is-white']"
-          @click="toggleShuffle"
-        >
-          <font-awesome-icon
-            :class="controls.shuffle && 'icon-button_pressed'"
-            icon="random"
-          />
-        </button>
-        <button
-          :class="[
-            'button',
-            'is-white',
-            controls.repeat === 1 && 'repeate-one',
-          ]"
-          @click="toggleRepeat"
-        >
-          <font-awesome-icon
-            :class="controls.repeat && 'icon-button_pressed'"
-            icon="redo"
-          />
-        </button>
+        <button-panel
+          :show-track-list="showTrackList"
+          :is-empty-track-list="isEmptyTrackList"
+          :shuffle="controls.shuffle"
+          :repeat="controls.repeat"
+          @toggle-track-list="toggleTrackList"
+          @toggle-shuffle="toggleShuffle"
+          @toggle-repeat="toggleRepeat"
+        />
       </div>
       <div class="column is-4">
         <volume-control
@@ -73,7 +51,7 @@
     </div>
 
     <div
-      v-if="visibleTrackList"
+      v-if="showTrackList"
       class="columns is-mobile is-vcentered"
     >
       <div class="column is-10 is-offset-1">
@@ -95,7 +73,7 @@
  * @property {Boolean} next
  * @property {Boolean} prev
  * @property {Boolean} shuffle
- * @property {Boolean} repeat
+ * @property {Boolean|Number} repeat
  * @property {Boolean} like
  * @property {Boolean} dislike
  */
@@ -122,10 +100,11 @@ import TabSelector from './TabSelector.vue';
 import PlayControl from './PlayControl.vue';
 import TrackList from './TrackList.vue';
 import VolumeControl from './VolumeControl.vue';
+import ButtonPanel from './ButtonPanel.vue';
 
 export default {
   name: 'Main',
-  components: { TabSelector, PlayControl, TrackList, VolumeControl },
+  components: { TabSelector, PlayControl, TrackList, VolumeControl, ButtonPanel },
 
   data() {
     return {
@@ -135,7 +114,7 @@ export default {
       loading: false,
       /** @type {TRACK_LIST_ITEM[]} */
       trackList: [],
-      visibleTrackList: false,
+      showTrackList: false,
       volumeLevel: 50,
     };
   },
@@ -146,7 +125,7 @@ export default {
     currentTrack() {
       return this.state.currentTrack;
     },
-    emptyTrackList() {
+    isEmptyTrackList() {
       return !this.trackList;
     },
     controls() {
@@ -186,8 +165,8 @@ export default {
         file: '/content_script.js'
       });
     },
-    showTrackList() {
-      this.visibleTrackList = !this.visibleTrackList;
+    toggleTrackList() {
+      this.showTrackList = !this.showTrackList;
       this.sendMessage({ command: 'get-track-list' });
     },
 
@@ -235,14 +214,4 @@ export default {
 .options-control {
   border-top: 1px solid lightgray;
 }
-
-.repeate-one::after {
-  position: absolute;
-  left: 30px;
-  top: 15px;
-  content: '1';
-  font-size: 10px;
-}
 </style>
-
-<style src="../styles/icon-button.css"></style>
