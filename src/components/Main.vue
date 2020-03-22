@@ -41,11 +41,25 @@
           />
         </button>
         <button
-          :class="['button', 'is-white', controls.shuffle && 'is-active']"
+          :class="['button', 'is-white']"
           @click="toggleShuffle"
         >
           <font-awesome-icon
+            :class="controls.shuffle && 'icon-button_pressed'"
             icon="random"
+          />
+        </button>
+        <button
+          :class="[
+            'button',
+            'is-white',
+            controls.repeat === 1 && 'repeate-one',
+          ]"
+          @click="toggleRepeat"
+        >
+          <font-awesome-icon
+            :class="controls.repeat && 'icon-button_pressed'"
+            icon="redo"
           />
         </button>
       </div>
@@ -187,6 +201,9 @@ export default {
     toggleShuffle() {
       this.sendMessage({ command: 'toggle-shuffle' });
     },
+    toggleRepeat() {
+      this.sendMessage({ command: 'toggle-repeat' });
+    }
   }
 };
 </script>
@@ -217,6 +234,14 @@ export default {
 
 .options-control {
   border-top: 1px solid lightgray;
+}
+
+.repeate-one::after {
+  position: absolute;
+  left: 30px;
+  top: 15px;
+  content: '1';
+  font-size: 10px;
 }
 </style>
 

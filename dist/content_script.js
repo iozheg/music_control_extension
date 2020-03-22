@@ -62,6 +62,10 @@
         await externalAPI.toggleShuffle();
         response = { state: getState() };
         break;
+      case 'toggle-repeat':
+        await externalAPI.toggleRepeat();
+        response = { state: getState() };
+        break;
     }
 
     browser.runtime.sendMessage(response);
