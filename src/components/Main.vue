@@ -8,7 +8,7 @@
         v-if="isRadio"
         class="column is-2 is-vcentered is-size-7"
       >
-        <span>Radio</span>
+        <span class="tag is-link is-light">Radio</span>
       </div>
     </div>
     <div class="columns is-mobile track-name-row">
