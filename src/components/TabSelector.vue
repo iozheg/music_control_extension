@@ -1,39 +1,13 @@
 <template>
-  <div
-    :class="['dropdown columns is-mobile', showTabs ? 'is-active' : '']"
-    @click="showTabs = !showTabs"
-  >
-    <div class="dropdown-trigger column is-3 is-vcentered">
-      <div class="">
-        <button
-          class="button is-small"
-          aria-haspopup="true"
-          aria-controls="dropdown-menu"
-        >
-          <span>Tab</span>
-          <span class="icon is-small">
-            <i class="fas fa-angle-down" aria-hidden="true"></i>
-          </span>
-        </button>
-      </div>
-    </div>
-    <div class="column is-8 is-vcentered tab-name">
-      <span class="is-size-7">{{ selectedTab ? selectedTab.title : '' }}</span>
-    </div>
-
-    <div class="dropdown-menu" id="dropdown-menu" role="menu">
-      <div class="dropdown-content">
-        <a
-          href="#"
-          class="dropdown-item is-small is-size-7"
-          v-for="tab in tabs"
-          :key="tab.id"
-          @click="selectTab(tab.id)"
-        >
-          {{ tab.id }} - {{ tab.title }}
-        </a>
-      </div>
-    </div>
+  <div class="select is-small">
+    <select @change="selectTab($event.target.value)">
+      <option
+        v-for="tab in tabs"
+        :key="tab.id"
+        :value="tab.id"
+        :selected="selectedTabId === tab.id"
+      >{{ tab.id }} - {{ tab.title }}</option>
+    </select>
   </div>
 </template>
 
@@ -46,13 +20,7 @@ export default {
       tabs: [],
       url: 'music.yandex',
       selectedTabId: undefined,
-      showTabs: false
     };
-  },
-  computed: {
-    selectedTab() {
-      return this.tabs.find(tab => tab.id === this.selectedTabId);
-    }
   },
 
   async mounted() {
@@ -91,11 +59,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.tab-name {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-</style>
