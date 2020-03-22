@@ -57,6 +57,11 @@
           volumeLevel: getVolumeLevel()
         };
         break;
+
+      case 'toggle-shuffle':
+        await externalAPI.toggleShuffle();
+        response = { state: getState() };
+        break;
     }
 
     browser.runtime.sendMessage(response);
@@ -100,7 +105,8 @@
 
   const stateEvents = [
     'EVENT_TRACK',
-    'EVENT_STATE'
+    'EVENT_STATE',
+    'EVENT_CONTROLS',
   ];
 
   function updateState() {

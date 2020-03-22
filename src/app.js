@@ -8,10 +8,22 @@ import {
   faFastBackward,
   faFastForward,
   faList,
+  faVolumeUp,
+  faVolumeMute,
+  faRandom
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-library.add(faPlay, faPause, faFastBackward, faFastForward, faList);
+library.add(
+  faPlay,
+  faPause,
+  faFastBackward,
+  faFastForward,
+  faList,
+  faVolumeUp,
+  faVolumeMute,
+  faRandom
+);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 

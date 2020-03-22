@@ -40,6 +40,14 @@
             icon="list"
           />
         </button>
+        <button
+          :class="['button', 'is-white', controls.shuffle && 'is-active']"
+          @click="toggleShuffle"
+        >
+          <font-awesome-icon
+            icon="random"
+          />
+        </button>
       </div>
       <div class="column is-4">
         <volume-control
@@ -127,6 +135,9 @@ export default {
     emptyTrackList() {
       return !this.trackList;
     },
+    controls() {
+      return this.state.controls || {};
+    },
   },
 
   created() {
@@ -171,7 +182,11 @@ export default {
     },
     toggleMute() {
       this.sendMessage({ command: 'toggle-mute' });
-    }
+    },
+
+    toggleShuffle() {
+      this.sendMessage({ command: 'toggle-shuffle' });
+    },
   }
 };
 </script>
