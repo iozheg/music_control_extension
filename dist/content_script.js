@@ -66,6 +66,15 @@
         await externalAPI.toggleRepeat();
         response = { state: getState() };
         break;
+
+      case 'toggle-dislike':
+        await externalAPI.toggleDislike();
+        response = { state: getState() };
+        break;
+      case 'toggle-like':
+        await externalAPI.toggleLike();
+        response = { state: getState() };
+        break;
     }
 
     browser.runtime.sendMessage(response);
@@ -82,7 +91,9 @@
       currentTrack: {
         title: currentTrack.title,
         artists: [...currentTrack.artists].map(artist => artist.title),
-        link: currentTrack.link
+        link: currentTrack.link,
+        liked: currentTrack.liked,
+        disliked: currentTrack.disliked,
       },
       sourceType: sourceInfo.type
     };

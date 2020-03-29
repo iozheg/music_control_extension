@@ -11,7 +11,7 @@
     />
     <font-awesome-icon
       class="icon-button"
-      :icon="state.isPlaying ? 'pause' : 'play'"
+      :icon="isPlaying ? 'pause' : 'play'"
       @click="togglePlay"
       size="3x"
     />
@@ -28,24 +28,25 @@
 export default {
   name: 'PlayControl',
   props: {
-    state: { type: Object, default: () =>({})},
+    isPlaying: { type: Boolean, default: false },
+    controls: { type: Object, default: () => ({}) },
   },
   computed: {
     previousTrackAvaliable() {
-      return this.state.controls ? this.state.controls.prev !== null : true;
+      return !!this.controls.prev;
     },
   },
 
   methods: {
     togglePlay() {
-      this.$emit('send-message', { command: 'play' });
+      this.$emit('toggle-play');
     },
     playNext() {
-      this.$emit('send-message', { command: 'play-next' });
+      this.$emit('play-next');
     },
     playPrevious() {
       if (this.previousTrackAvaliable) {
-        this.$emit('send-message', { command: 'play-previous' });
+        this.$emit('play-previous');
       }
     },
   },

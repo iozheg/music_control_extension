@@ -12,6 +12,8 @@ import {
   faVolumeMute,
   faRandom,
   faRedo,
+  faHeart,
+  faBan,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -25,6 +27,8 @@ library.add(
   faVolumeMute,
   faRandom,
   faRedo,
+  faHeart,
+  faBan,
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);

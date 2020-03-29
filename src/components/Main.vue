@@ -20,14 +20,14 @@
       </div>
     </div>
 
-    <div class="columns is-mobile is-vcentered is-centered">
-      <div class="column is-4 has-text-centered">
-        <play-control
-          :state="state"
-          @send-message="sendMessage($event, true)"
-        />
-      </div>
-    </div>
+    <main-controls
+      :state="state"
+      @toggle-play="sendMessage({ command: 'play' })"
+      @play-next="sendMessage({ command: 'play-next' })"
+      @play-previous="sendMessage({ command: 'play-previous' })"
+      @toggle-dislike="sendMessage({ command: 'toggle-dislike' })"
+      @toggle-like="sendMessage({ command: 'toggle-like' })"
+    />
 
     <div class="columns is-mobile options-control">
       <div class="column is-6 is-offset-1">
@@ -97,14 +97,14 @@
 
 import 'bulma/css/bulma.css';
 import TabSelector from './TabSelector.vue';
-import PlayControl from './PlayControl.vue';
+import MainControls from './MainControls.vue';
 import TrackList from './TrackList.vue';
 import VolumeControl from './VolumeControl.vue';
 import ButtonPanel from './ButtonPanel.vue';
 
 export default {
   name: 'Main',
-  components: { TabSelector, PlayControl, TrackList, VolumeControl, ButtonPanel },
+  components: { TabSelector, MainControls, TrackList, VolumeControl, ButtonPanel },
 
   data() {
     return {
