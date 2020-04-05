@@ -1,5 +1,5 @@
 <template>
-  <div class="select is-small">
+  <div class="select is-small is-flex">
     <select @change="selectTab($event.target.value)">
       <option
         v-for="tab in tabs"
@@ -8,6 +8,17 @@
         :selected="selectedTabId === tab.id"
       >{{ tab.id }} - {{ tab.title }}</option>
     </select>
+    <button
+      :title="labelStrings.switch_tab"
+      :class="['button', 'is-white', 'is-small']"
+      :disabled="selectedTabId === undefined"
+      style="margin-left: 3px;"
+      @click="showTab"
+    >
+      <font-awesome-icon
+        icon="external-link-alt"
+      />
+    </button>
   </div>
 </template>
 
@@ -55,7 +66,12 @@ export default {
 
         this.$emit('tab-selected', this.selectedTabId);
       }
-    }
+    },
+    showTab() {
+      if (this.selectedTabId) {
+        browser.tabs.update(this.selectedTabId, { active: true });
+      }
+    },
   }
 };
 </script>

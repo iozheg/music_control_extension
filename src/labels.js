@@ -10,4 +10,5 @@ export default {
   repeat: 'Повтор',
   turn_sound_on: 'Включить звук',
   turn_sound_off: 'Выключить звук',
+  switch_tab: 'Показать вкладку',
 };

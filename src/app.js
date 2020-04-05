@@ -14,6 +14,7 @@ import {
   faRedo,
   faHeart,
   faBan,
+  faExternalLinkAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -31,6 +32,7 @@ library.add(
   faRedo,
   faHeart,
   faBan,
+  faExternalLinkAlt,
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
