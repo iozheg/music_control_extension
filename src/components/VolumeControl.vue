@@ -1,6 +1,7 @@
 <template>
   <div class="volume-control">
     <button
+      :title="muted ? labelStrings.turn_sound_on : labelStrings.turn_sound_off"
       :class="['button', 'is-white']"
       @click="mute"
     >
@@ -11,6 +12,7 @@
     </button>
     <input
       :value="volumeLevel"
+      :title="volumeLevel"
       class="slider is-fullwidth is-small is-circle no-margin"
       step="1"
       min="0"

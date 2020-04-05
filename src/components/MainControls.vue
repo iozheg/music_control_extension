@@ -3,6 +3,7 @@
     <div class="column is-1 has-text-centered">
       <font-awesome-icon
         :class="['icon-button', disliked && 'icon-button_pressed']"
+        :title="labelStrings.dislike"
         icon="ban"
         @click="$emit('toggle-dislike')"
       />
@@ -19,6 +20,7 @@
     <div class="column is-1 is-offset-2 has-text-centered">
       <font-awesome-icon
         :class="['icon-button', liked && 'icon-button_pressed']"
+        :title="labelStrings.like"
         icon="heart"
         @click="$emit('toggle-like')"
       />

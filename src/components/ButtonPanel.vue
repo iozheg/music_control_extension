@@ -1,6 +1,7 @@
 <template>
   <div class="field is-grouped">
     <button
+      :title="labelStrings.track_list"
       :class="['button', 'is-white', showTrackList && 'is-active']"
       :disabled="isEmptyTrackList"
       @click="$emit('toggle-track-list')"
@@ -10,6 +11,7 @@
       />
     </button>
     <button
+      :title="labelStrings.shuffle"
       :class="['button', 'is-white']"
       @click="$emit('toggle-shuffle')"
     >
@@ -19,6 +21,7 @@
       />
     </button>
     <button
+      :title="labelStrings.repeat"
       :class="[
         'button',
         'is-white',
