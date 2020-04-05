@@ -36,7 +36,7 @@ export default {
   },
   computed: {
     previousTrackAvaliable() {
-      return !!this.controls.prev;
+      return this.controls.prev !== null;
     },
   },
 

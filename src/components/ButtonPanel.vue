@@ -13,6 +13,7 @@
     <button
       :title="labelStrings.shuffle"
       :class="['button', 'is-white']"
+      :disabled="!shuffleAvailable"
       @click="$emit('toggle-shuffle')"
     >
       <font-awesome-icon
@@ -27,6 +28,7 @@
         'is-white',
         repeatOneTrack && 'repeate-one',
       ]"
+      :disabled="!repeatAvailable"
       @click="$emit('toggle-repeat')"
     >
       <font-awesome-icon
@@ -59,6 +61,12 @@ export default {
     },
     repeatOn() {
       return this.repeatOneTrack || this.repeat === REPEAT_ALL;
+    },
+    shuffleAvailable() {
+      return this.shuffle !== null;
+    },
+    repeatAvailable() {
+      return this.repeat !== null;
     },
   },
 };

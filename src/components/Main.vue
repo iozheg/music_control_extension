@@ -150,6 +150,7 @@ export default {
 
       if (message.state) {
         this.state = message.state;
+        console.log(this.state);
       }
       if (message.trackList) {
         this.trackList = message.trackList;
