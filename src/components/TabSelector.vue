@@ -1,5 +1,5 @@
 <template>
-  <div class="is-flex">
+  <div v-if="selectedTabId !== undefined" class="is-flex">
     <div class="select is-small max-width">
       <select
         class="max-width"

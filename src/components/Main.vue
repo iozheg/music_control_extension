@@ -11,56 +11,73 @@
         <span class="tag is-link is-light">Radio</span>
       </div>
     </div>
-    <div class="columns is-mobile track-name-row">
-      <div v-if="currentTrack" class="column is-10 is-offset-1">
-        <div class="track-name is-size-4">{{ currentTrack.title }}</div>
-        <div class="track-artist is-size-7 has-text-grey">{{ currentTrack.artists.join(',') }}</div>
-        <progress v-show="loading" class="progress is-small process-indication" max="100"></progress>
-        <div v-show="!loading" class="process-indication"></div>
-      </div>
-    </div>
 
-    <main-controls
-      :state="state"
-      @toggle-play="sendMessage({ command: 'play' })"
-      @play-next="sendMessage({ command: 'play-next' })"
-      @play-previous="sendMessage({ command: 'play-previous' })"
-      @toggle-dislike="sendMessage({ command: 'toggle-dislike' })"
-      @toggle-like="sendMessage({ command: 'toggle-like' })"
-    />
-
-    <div class="columns is-mobile options-control">
-      <div class="column is-6 is-offset-1">
-        <button-panel
-          :show-track-list="showTrackList"
-          :is-empty-track-list="isEmptyTrackList"
-          :shuffle="controls.shuffle"
-          :repeat="controls.repeat"
-          @toggle-track-list="toggleTrackList"
-          @toggle-shuffle="toggleShuffle"
-          @toggle-repeat="toggleRepeat"
-        />
+    <template v-if="hasMusicTab">
+      <div class="columns is-mobile track-name-row">
+        <div v-if="currentTrack" class="column is-10 is-offset-1">
+          <div class="track-name is-size-4">{{ currentTrack.title }}</div>
+          <div class="track-artist is-size-7 has-text-grey">{{ currentTrack.artists.join(',') }}</div>
+          <progress v-show="loading" class="progress is-small process-indication" max="100"></progress>
+          <div v-show="!loading" class="process-indication"></div>
+        </div>
       </div>
-      <div class="column is-4">
-        <volume-control
-          :volume-level="volumeLevel"
-          @change-volume="changeVolume"
-          @toggle-mute="toggleMute"
-        />
-      </div>
-    </div>
 
-    <div
-      v-if="showTrackList"
-      class="columns is-mobile is-vcentered"
-    >
-      <div class="column is-10 is-offset-1">
-        <track-list
-          :track-list="trackList"
-          :current-track-link="currentTrack.link"
-          :is-playing="state.isPlaying"
-          @switch-to-track="sendMessage($event, true)"
-        />
+      <main-controls
+        :state="state"
+        @toggle-play="sendMessage({ command: 'play' })"
+        @play-next="sendMessage({ command: 'play-next' })"
+        @play-previous="sendMessage({ command: 'play-previous' })"
+        @toggle-dislike="sendMessage({ command: 'toggle-dislike' })"
+        @toggle-like="sendMessage({ command: 'toggle-like' })"
+      />
+
+      <div class="columns is-mobile options-control">
+        <div class="column is-6 is-offset-1">
+          <button-panel
+            :show-track-list="showTrackList"
+            :is-empty-track-list="isEmptyTrackList"
+            :shuffle="controls.shuffle"
+            :repeat="controls.repeat"
+            @toggle-track-list="toggleTrackList"
+            @toggle-shuffle="toggleShuffle"
+            @toggle-repeat="toggleRepeat"
+          />
+        </div>
+        <div class="column is-4">
+          <volume-control
+            :volume-level="volumeLevel"
+            @change-volume="changeVolume"
+            @toggle-mute="toggleMute"
+          />
+        </div>
+      </div>
+
+      <div
+        v-if="showTrackList"
+        class="columns is-mobile is-vcentered"
+      >
+        <div class="column is-10 is-offset-1">
+          <track-list
+            :track-list="trackList"
+            :current-track-link="currentTrack.link"
+            :is-playing="state.isPlaying"
+            @switch-to-track="sendMessage($event, true)"
+          />
+        </div>
+      </div>
+    </template>
+    <div v-else class="columns is-mobile">
+      <div class="column is-10 is-offset-1 has-text-centered">
+        <div>{{ labelStrings.no_tabs }}</div>
+        <button
+          :title="'Открыть'"
+          :class="['button', 'is-text']"
+          :disabled="selectedTabId === undefined"
+          style="margin-left: 3px;"
+          @click="openNewMusicTab"
+        >
+          {{ labelStrings.open_music_tab }}
+        </button>
       </div>
     </div>
   </div>
@@ -119,6 +136,9 @@ export default {
     };
   },
   computed: {
+    hasMusicTab() {
+      return this.selectedTabId !== null;
+    },
     isRadio() {
       return this.state.sourceType === 'radio';
     },
@@ -150,7 +170,6 @@ export default {
 
       if (message.state) {
         this.state = message.state;
-        console.log(this.state);
       }
       if (message.trackList) {
         this.trackList = message.trackList;
@@ -183,6 +202,11 @@ export default {
     },
     toggleRepeat() {
       this.sendMessage({ command: 'toggle-repeat' });
+    },
+
+    async openNewMusicTab() {
+      await browser.tabs.create({ url: 'https://music.yandex.ru/' });
+      window.close();
     }
   }
 };

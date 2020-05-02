@@ -11,4 +11,6 @@ export default {
   turn_sound_on: 'Включить звук',
   turn_sound_off: 'Выключить звук',
   switch_tab: 'Показать вкладку',
+  no_tabs: 'Не найдены вкладки Я.Музыка',
+  open_music_tab: 'Открыть'
 };
