@@ -1,13 +1,18 @@
 <template>
-  <div class="select is-small is-flex">
-    <select @change="selectTab($event.target.value)">
-      <option
-        v-for="tab in tabs"
-        :key="tab.id"
-        :value="tab.id"
-        :selected="selectedTabId === tab.id"
-      >{{ tab.id }} - {{ tab.title }}</option>
-    </select>
+  <div class="is-flex">
+    <div class="select is-small max-width">
+      <select
+        class="max-width"
+        @change="selectTab($event.target.value)"
+      >
+        <option
+          v-for="tab in tabs"
+          :key="tab.id"
+          :value="tab.id"
+          :selected="selectedTabId === tab.id"
+        >{{ tab.title }}</option>
+      </select>
+    </div>
     <button
       :title="labelStrings.switch_tab"
       :class="['button', 'is-white', 'is-small']"
@@ -75,3 +80,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.max-width {
+  width: 100%;
+}
+</style>
