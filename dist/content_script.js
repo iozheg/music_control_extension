@@ -80,23 +80,29 @@
     browser.runtime.sendMessage(response);
   }
 
-  function getState() {
-    const externalAPI = window.wrappedJSObject.externalAPI;
-    const currentTrack = externalAPI.getCurrentTrack();
-    const sourceInfo = externalAPI.getSourceInfo();
+  function getState(reTry = true) {
+    try {
+      const externalAPI = window.wrappedJSObject.externalAPI;
+      const currentTrack = externalAPI.getCurrentTrack();
+      const sourceInfo = externalAPI.getSourceInfo();
 
-    return {
-      isPlaying: externalAPI.isPlaying(),
-      controls: externalAPI.getControls(),
-      currentTrack: {
-        title: currentTrack.title,
-        artists: [...currentTrack.artists].map(artist => artist.title),
-        link: currentTrack.link,
-        liked: currentTrack.liked,
-        disliked: currentTrack.disliked,
-      },
-      sourceType: sourceInfo.type
-    };
+      return {
+        isPlaying: externalAPI.isPlaying(),
+        controls: externalAPI.getControls(),
+        currentTrack: {
+          title: currentTrack.title,
+          artists: [...currentTrack.artists].map(artist => artist.title),
+          link: currentTrack.link,
+          liked: currentTrack.liked,
+          disliked: currentTrack.disliked,
+        },
+        sourceType: sourceInfo.type
+      };
+    } catch(e) {
+      if (!reTry) {
+        setTimeout(getState, 2000, false);
+      }
+    }
   }
 
   function getTrackList() {
