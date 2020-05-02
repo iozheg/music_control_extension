@@ -13,10 +13,13 @@
         >
           <font-awesome-icon icon="play" />
         </div>
-        <span :style="track.link === currentTrackLink && 'font-weight: bold'">
+        <span
+          :style="track.link === currentTrackLink && 'font-weight: bold'"
+          class="no-wrap"
+        >
           {{ track.title }}
         </span>
-        <span class="has-text-grey-light artists">
+        <span class="has-text-grey-light artists no-wrap">
           {{ track.artists.join(', ') }}
         </span>
       </a>
@@ -48,8 +51,15 @@ export default {
 }
 .artists {
   margin-left: 5px;
+  flex-grow: 1;
+  flex-basis: 33%;
 }
 .playing-icon {
   margin-right: 5px;
+}
+.no-wrap {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
