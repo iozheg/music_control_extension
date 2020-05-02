@@ -10,6 +10,8 @@
   opacity: 1;
 }
 .icon-button_disabled,
-.icon-button_disabled:hover {
+.icon-button_disabled:hover,
+.disabled-control .icon-button,
+.disabled-control .icon-button:hover {
   opacity: 0.3;
 }

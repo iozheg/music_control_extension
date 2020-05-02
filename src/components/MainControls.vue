@@ -1,20 +1,23 @@
 <template>
-  <div class="columns is-mobile is-vcentered is-centered">
+  <div
+    :class="{ 'disabled-control': disabled }"
+    class="columns is-mobile is-vcentered is-centered"
+  >
     <div class="column is-1 has-text-centered">
       <font-awesome-icon
         :class="['icon-button', disliked && 'icon-button_pressed']"
         :title="labelStrings.dislike"
         icon="ban"
-        @click="$emit('toggle-dislike')"
+        @click="emitEvent('toggle-dislike')"
       />
     </div>
     <div class="column is-4 is-offset-2 has-text-centered">
       <play-control
         :isPlaying="state.isPlaying"
         :controls="state.controls"
-        @toggle-play="$emit('toggle-play')"
-        @play-next="$emit('play-next')"
-        @play-previous="$emit('play-previous')"
+        @toggle-play="emitEvent('toggle-play')"
+        @play-next="emitEvent('play-next')"
+        @play-previous="emitEvent('play-previous')"
       />
     </div>
     <div class="column is-1 is-offset-2 has-text-centered">
@@ -22,7 +25,7 @@
         :class="['icon-button', liked && 'icon-button_pressed']"
         :title="labelStrings.like"
         icon="heart"
-        @click="$emit('toggle-like')"
+        @click="emitEvent('toggle-like')"
       />
     </div>
   </div>
@@ -36,6 +39,7 @@ export default {
   components: { PlayControl },
   props: {
     state: { type: Object, default: () => ({}) },
+    disabled: { type: Boolean, default: false },
   },
   computed: {
     liked() {
@@ -45,6 +49,12 @@ export default {
     disliked() {
       const { currentTrack = {} } = this.state;
       return currentTrack.disliked;
+    },
+  },
+
+  methods: {
+    emitEvent(event) {
+      !this.disabled && this.$emit(event);
     },
   },
 };

@@ -14,16 +14,28 @@
 
     <template v-if="hasMusicTab">
       <div class="columns is-mobile track-name-row">
-        <div v-if="currentTrack" class="column is-10 is-offset-1">
-          <div class="track-name is-size-4">{{ currentTrack.title }}</div>
-          <div class="track-artist is-size-7 has-text-grey">{{ currentTrack.artists.join(',') }}</div>
-          <progress v-show="loading" class="progress is-small process-indication" max="100"></progress>
-          <div v-show="!loading" class="process-indication"></div>
+        <div class="column is-10 is-offset-1">
+          <template v-if="currentTrack && !isAdvertising">
+            <div class="track-name is-size-4">{{ currentTrack.title }}</div>
+            <div class="track-artist is-size-7 has-text-grey">
+              {{ currentTrack.artists.join(',') }}
+            </div>
+            <progress
+              v-show="loading"
+              class="progress is-small process-indication"
+              max="100"
+            />
+            <div v-show="!loading" class="process-indication"></div>
+          </template>
+          <template v-else-if="isAdvertising">
+            <div class="track-name is-size-4">{{ labelStrings.advertising }}</div>
+          </template>
         </div>
       </div>
 
       <main-controls
         :state="state"
+        :disabled="isAdvertising"
         @toggle-play="sendMessage({ command: 'play' })"
         @play-next="sendMessage({ command: 'play-next' })"
         @play-previous="sendMessage({ command: 'play-previous' })"
@@ -111,6 +123,12 @@
  * @property {String} title
  * @property {String[]} artists
  */
+/**
+ * @typedef {Object} ADVERTISING
+ * @property {String} image
+ * @property {String} link
+ * @property {String} title
+ */
 
 import 'bulma/css/bulma.css';
 import TabSelector from './TabSelector.vue';
@@ -133,6 +151,8 @@ export default {
       trackList: [],
       showTrackList: false,
       volumeLevel: 50,
+      /** @type {ADVERTISING|false} */
+      isAdvertising: false,
     };
   },
   computed: {
@@ -176,6 +196,9 @@ export default {
       }
       if (message.volumeLevel >= 0) {
         this.volumeLevel = message.volumeLevel;
+      }
+      if (message.advertStatus !== undefined) {
+        this.isAdvertising = !!message.advertStatus;
       }
     },
 

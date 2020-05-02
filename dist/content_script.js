@@ -136,16 +136,25 @@
   function updateVolume() {
     browser.runtime.sendMessage({ volumeLevel: getVolumeLevel() });
   }
+  function notifyAdvert(advertData) {
+    browser.runtime.sendMessage({ advertStatus: advertData });
+  }
   function turnOnEvents() {
     const externalAPI = window.wrappedJSObject.externalAPI;
 
+    // common events
     exportFunction(updateState, window, { defineAs: 'updateStateExtension'});
     stateEvents.forEach(event => {
       externalAPI.on(externalAPI[event], window.wrappedJSObject.updateStateExtension);
     });
 
+    // volume change
     exportFunction(updateVolume, window, { defineAs: 'updateVolumeExtension'});
     externalAPI.on(externalAPI.EVENT_VOLUME, window.wrappedJSObject.updateVolumeExtension);
+
+    // advert event
+    exportFunction(notifyAdvert, window, { defineAs: 'updateAdvertStatusExtension'});
+    externalAPI.on(externalAPI.EVENT_ADVERT, window.wrappedJSObject.updateAdvertStatusExtension);
   }
   turnOnEvents();
 })();
