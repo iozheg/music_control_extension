@@ -12,7 +12,7 @@
     </button>
     <input
       :value="volumeLevel"
-      :title="volumeLevel"
+      :title="Math.round(volumeLevel)"
       class="slider is-fullwidth is-small is-circle no-margin"
       step="1"
       min="0"
