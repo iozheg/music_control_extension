@@ -1,14 +1,14 @@
 {
   "manifest_version": 2,
-  "name": "YaMusic control",
+  "name": "YaMusic control panel",
   "version": "1.0",
   "icons": {
-    "48": "assets/img/logo.png"
+    "48": "assets/img/icon.svg"
   },
 
   "browser_action": {
-    "default_icon": "assets/img/logo.png",
-    "default_title": "Opens MyExtension",
+    "default_icon": "assets/img/icon.svg",
+    "default_title": "Открыть управление Я.Музыка",
     "default_popup": "app.html"
   },
 
