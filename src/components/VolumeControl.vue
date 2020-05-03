@@ -12,11 +12,10 @@
     </button>
     <input
       :value="volumeLevel"
-      :title="Math.round(volumeLevel)"
       class="slider is-fullwidth is-small is-circle no-margin"
       step="1"
       min="0"
-      max="100"
+      max="98"
       type="range"
       @input="changeVolume"
     >
