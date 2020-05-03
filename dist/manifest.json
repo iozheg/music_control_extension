@@ -12,5 +12,13 @@
     "default_popup": "app.html"
   },
 
-  "permissions": ["*://music.yandex.ru/*", "tabs", "storage"]
+  "permissions": [
+    "*://music.yandex.ru/*",
+    "*://music.yandex.by/*",
+    "*://music.yandex.ua/*",
+    "*://music.yandex.kz/*",
+    "*://music.yandex.com/*",
+    "tabs",
+    "storage"
+  ]
 }
