@@ -1,0 +1,91 @@
+{
+  "extensionName": {
+    "message": "YaMusic control panel",
+    "description": "Name of the extension."
+  },
+
+  "defaultTitle": {
+    "message": "Open YaMusic control panel",
+    "description": "Title of the click notification."
+  },
+
+  "likeButton": {
+    "message": "Like",
+    "description": "Like button title"
+  },
+
+  "dislikeButton": {
+    "message": "Dislike",
+    "description": "Dislike button title"
+  },
+
+  "previousButton": {
+    "message": "Previous track",
+    "description": "Previous button title"
+  },
+
+  "nextButton": {
+    "message": "Next track",
+    "description": "Next button title"
+  },
+
+  "playButton": {
+    "message": "Play",
+    "description": "Play button title"
+  },
+
+  "pauseButton": {
+    "message": "Pause",
+    "description": "Pause button title"
+  },
+
+  "trackListButton": {
+    "message": "Track list",
+    "description": "Track list button title"
+  },
+
+  "shuffleButton": {
+    "message": "Shuffle",
+    "description": "Shuffle button title"
+  },
+
+  "repeatButton": {
+    "message": "Repeat",
+    "description": "Repeat button title"
+  },
+
+  "turnSoundOnButton": {
+    "message": "Turn on sound",
+    "description": "Turn on sound button title"
+  },
+
+  "turnSoundOffButton": {
+    "message": "Turn off sound",
+    "description": "Turn off sound button title"
+  },
+
+  "switchTabButton": {
+    "message": "Show tab",
+    "description": "Show tab button title"
+  },
+
+  "radioLabel": {
+    "message": "Radio",
+    "description": "Radio label"
+  },
+
+  "noTabsLabel": {
+    "message": "No YaMusic tabs",
+    "description": "No tabs label"
+  },
+
+  "openMusicTabButton": {
+    "message": "Open",
+    "description": "Open music tab button"
+  },
+
+  "advertisingLabel": {
+    "message": "Advertising",
+    "description": "Advertising label"
+  }
+}

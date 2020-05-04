@@ -8,7 +8,7 @@
         v-if="isRadio"
         class="column is-2 is-vcentered"
       >
-        <span class="tag is-link is-light">Radio</span>
+        <span class="tag is-link is-light">{{ i18n("radioLabel") }}</span>
       </div>
     </div>
 
@@ -28,7 +28,7 @@
             <div v-show="!loading" class="process-indication"></div>
           </template>
           <template v-else-if="isAdvertising">
-            <div class="track-name is-size-4">{{ labelStrings.advertising }}</div>
+            <div class="track-name is-size-4">{{ i18n("advertisingLabel") }}</div>
           </template>
         </div>
       </div>
@@ -80,15 +80,15 @@
     </template>
     <div v-else class="columns is-mobile">
       <div class="column is-10 is-offset-1 has-text-centered">
-        <div>{{ labelStrings.no_tabs }}</div>
+        <div>{{ i18n("noTabsLabel") }}</div>
         <button
-          :title="'Открыть'"
+          :title="i18n('openMusicTabButton')"
           :class="['button', 'is-text']"
           :disabled="selectedTabId === undefined"
           style="margin-left: 3px;"
           @click="openNewMusicTab"
         >
-          {{ labelStrings.open_music_tab }}
+          {{ i18n("openMusicTabButton") }}
         </button>
       </div>
     </div>

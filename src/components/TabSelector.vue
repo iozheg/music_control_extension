@@ -14,7 +14,7 @@
       </select>
     </div>
     <button
-      :title="labelStrings.switch_tab"
+      :title="i18n('switchTabButton')"
       :class="['button', 'is-white', 'is-small']"
       :disabled="selectedTabId === undefined"
       style="margin-left: 3px;"

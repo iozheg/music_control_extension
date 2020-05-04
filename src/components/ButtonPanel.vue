@@ -1,7 +1,7 @@
 <template>
   <div class="field is-grouped">
     <button
-      :title="labelStrings.track_list"
+      :title="i18n('trackListButton')"
       :class="['button', 'is-white', showTrackList && 'is-active']"
       :disabled="isEmptyTrackList"
       @click="$emit('toggle-track-list')"
@@ -11,7 +11,7 @@
       />
     </button>
     <button
-      :title="labelStrings.shuffle"
+      :title="i18n('shuffleButton')"
       :class="['button', 'is-white']"
       :disabled="!shuffleAvailable"
       @click="$emit('toggle-shuffle')"
@@ -22,7 +22,7 @@
       />
     </button>
     <button
-      :title="labelStrings.repeat"
+      :title="i18n('repeatButton')"
       :class="[
         'button',
         'is-white',

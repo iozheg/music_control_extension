@@ -5,20 +5,20 @@
         'icon-button',
         !previousTrackAvaliable ? 'icon-button_disabled' : ''
       ]"
-      :title="labelStrings.previous"
+      :title="i18n('previousButton')"
       icon="fast-backward"
       @click="playPrevious"
       size="2x"
     />
     <font-awesome-icon
       class="icon-button"
-      :title="isPlaying ? labelStrings.pause : labelStrings.play"
+      :title="isPlaying ? i18n('pauseButton') : i18n('playButton')"
       :icon="isPlaying ? 'pause' : 'play'"
       @click="togglePlay"
       size="3x"
     />
     <font-awesome-icon
-      :title="labelStrings.next"
+      :title="i18n('nextButton')"
       class="icon-button"
       icon="fast-forward"
       @click="playNext"

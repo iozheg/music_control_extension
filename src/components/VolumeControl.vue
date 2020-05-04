@@ -1,7 +1,7 @@
 <template>
   <div class="volume-control">
     <button
-      :title="muted ? labelStrings.turn_sound_on : labelStrings.turn_sound_off"
+      :title="muted ? i18n('turnSoundOnButton') : i18n('turnSoundOffButton')"
       :class="['button', 'is-white']"
       @click="mute"
     >

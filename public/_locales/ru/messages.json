@@ -1,0 +1,91 @@
+{
+  "extensionName": {
+    "message": "Панель управления Я.Музыка",
+    "description": "Name of the extension."
+  },
+
+  "defaultTitle": {
+    "message": "Открыть управление Я.Музыка",
+    "description": "Title of the click notification."
+  },
+
+  "likeButton": {
+    "message": "Нравится",
+    "description": "Like button title"
+  },
+
+  "dislikeButton": {
+    "message": "Не нравится",
+    "description": "Dislike button title"
+  },
+
+  "previousButton": {
+    "message": "Предыдущий трек",
+    "description": "Previous button title"
+  },
+
+  "nextButton": {
+    "message": "Следующий трек",
+    "description": "Next button title"
+  },
+
+  "playButton": {
+    "message": "Играть",
+    "description": "Play button title"
+  },
+
+  "pauseButton": {
+    "message": "Пауза",
+    "description": "Pause button title"
+  },
+
+  "trackListButton": {
+    "message": "Список треков",
+    "description": "Track list button title"
+  },
+
+  "shuffleButton": {
+    "message": "Случайный порядок",
+    "description": "Shuffle button title"
+  },
+
+  "repeatButton": {
+    "message": "Повтор",
+    "description": "Repeat button title"
+  },
+
+  "turnSoundOnButton": {
+    "message": "Включить звук",
+    "description": "Turn sound on button title"
+  },
+
+  "turnSoundOffButton": {
+    "message": "Выключить звук",
+    "description": "Turn sound off button title"
+  },
+
+  "switchTabButton": {
+    "message": "Показать вкладку",
+    "description": "Show tab button title"
+  },
+
+  "radioLabel": {
+    "message": "Радио",
+    "description": "Radio label"
+  },
+
+  "noTabsLabel": {
+    "message": "Не найдены вкладки Я.Музыка",
+    "description": "No tabs label"
+  },
+
+  "openMusicTabButton": {
+    "message": "Открыть",
+    "description": "Open music tab button"
+  },
+
+  "advertisingLabel": {
+    "message": "Реклама",
+    "description": "Advertising label"
+  }
+}

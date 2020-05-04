@@ -18,8 +18,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-import labelStrings from './labels';
-
 library.add(
   faPlay,
   faPause,
@@ -38,11 +36,11 @@ library.add(
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.mixin({
-  data() {
-    return {
-      labelStrings,
-    };
-  },
+  methods: {
+    i18n(label) {
+      return browser.i18n.getMessage(label);
+    }
+  }
 });
 
 new Vue({
