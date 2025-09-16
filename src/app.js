@@ -35,6 +35,7 @@ library.add(
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
+const browser = require("webextension-polyfill");
 Vue.mixin({
   methods: {
     i18n(label) {

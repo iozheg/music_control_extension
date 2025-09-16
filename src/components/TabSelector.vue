@@ -28,6 +28,8 @@
 </template>
 
 <script>
+const browser = require("webextension-polyfill");
+
 export default {
   name: 'TabSelector',
 

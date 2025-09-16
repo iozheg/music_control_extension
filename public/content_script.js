@@ -1,4 +1,6 @@
 (function() {
+  console.log(window);
+  console.log(navigator);
   browser.runtime.sendMessage({
     state: getState(),
     trackList: getTrackList(),
@@ -12,7 +14,7 @@
   window.injected = true;
 
   async function commandHandler({ command, params }) {
-    const externalAPI = window.wrappedJSObject.externalAPI;
+    const externalAPI = window.wrappedJSObject?.externalAPI || window.externalAPI;
     let response;
 
     switch (command) {
@@ -106,7 +108,7 @@
   }
 
   function getTrackList() {
-    const externalAPI = window.wrappedJSObject.externalAPI;
+    const externalAPI = window.wrappedJSObject?.externalAPI || window.externalAPI;
     const list = externalAPI.getTracksList();
 
     return [...list].map(track => ({

@@ -130,12 +130,15 @@
  * @property {String} title
  */
 
+// import browser from 'webextension-polyfill';
 import 'bulma/css/bulma.css';
 import TabSelector from './TabSelector.vue';
 import MainControls from './MainControls.vue';
 import TrackList from './TrackList.vue';
 import VolumeControl from './VolumeControl.vue';
 import ButtonPanel from './ButtonPanel.vue';
+
+const browser = require("webextension-polyfill");
 
 export default {
   name: 'Main',
@@ -204,6 +207,7 @@ export default {
 
     async tabSelected(newTabId) {
       this.selectedTabId = newTabId;
+      await browser.tabs.executeScript(this.selectedTabId, { file: '/browser-polyfill.min.js' });
       await browser.tabs.executeScript(this.selectedTabId, {
         file: '/content_script.js'
       });
